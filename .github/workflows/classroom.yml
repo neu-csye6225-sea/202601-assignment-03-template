@@ -1,0 +1,38 @@
+name: GitHub Classroom Autograding
+
+on:
+  push:
+    branches: [ main, 'feature/*' ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      checks: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Audit Codebase (Generates Report)
+        env:
+          DEPLOY_ENV: ${{ vars.DEPLOY_ENV }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          chmod +x autograder.sh
+          ./autograder.sh
+
+      - name: Upload Grading Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: grading-report
+          path: grading-report.txt
+
+      - name: Assign Grade (Pass/Fail)
+        uses: education/autograding@v1

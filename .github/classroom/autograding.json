@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Production Standards Verification",
+      "setup": "",
+      "run": "grep 'FINAL SCORE: 100' grading-report.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 100
+    }
+  ]
+}
